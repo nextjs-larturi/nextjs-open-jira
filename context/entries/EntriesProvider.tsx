@@ -57,7 +57,6 @@ export const EntriesProvider:FC<Props> = ({ children }) => {
     const [state, dispatch] = useReducer(EntriesReducer, ENTRIES_INITIAL_STATE);
 
     const addNewEntry = (description: string) => {
-
         const newEntry: Entry = {
             _id: uuidv4(),
             description,
@@ -69,7 +68,13 @@ export const EntriesProvider:FC<Props> = ({ children }) => {
             type: 'ADD_ENTRY',
             payload: newEntry,
         });
+    };
 
+    const updateEntry = (entry: Entry) => {
+        dispatch({
+            type: 'UPDATE_ENTRY',
+            payload: entry,
+        });
     };
 
     return (
@@ -78,6 +83,7 @@ export const EntriesProvider:FC<Props> = ({ children }) => {
             
             // Methods
             addNewEntry,
+            updateEntry,
         }}>
             { children }
         </EntriesContext.Provider>
