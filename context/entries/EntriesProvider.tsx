@@ -8,44 +8,7 @@ export interface EntriesState {
 }
 
 const ENTRIES_INITIAL_STATE: EntriesState = {
-    entries: [
-        {
-            _id: uuidv4(),
-            description: 'Esta es mi pendiente',
-            status: 'pending',
-            createdAt: Date.now(),
-        },
-        {
-            _id: uuidv4(),
-            description: 'Esta es mi pendiente',
-            status: 'pending',
-            createdAt: Date.now(),
-        },
-        {
-            _id: uuidv4(),
-            description: 'Esta es mi pendiente',
-            status: 'pending',
-            createdAt: Date.now(),
-        },
-        {
-            _id: uuidv4(),
-            description: 'Esta esta en proceso',
-            status: 'in-progress',
-            createdAt: Date.now() - 1000000,
-        },
-        {
-            _id: uuidv4(),
-            description: 'Esta esta en proceso',
-            status: 'in-progress',
-            createdAt: Date.now() - 1000000,
-        },
-        {
-            _id: uuidv4(),
-            description: 'Esta tarea esta finalizada',
-            status: 'completed',
-            createdAt: Date.now() -100000,
-        },
-    ],
+    entries: [],
 }
 
 interface Props {
