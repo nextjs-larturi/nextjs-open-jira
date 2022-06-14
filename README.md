@@ -10,3 +10,6 @@ MongoDB Url Local:
 ```
 mongodb://localhost:27018/entriesdb
 ```
+
+Variables de entorno: 
+Copiar las de .env.template y crear el archivo.env
