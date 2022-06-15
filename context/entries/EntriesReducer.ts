@@ -11,7 +11,7 @@ export const EntriesReducer = (state: EntriesState, action: EntriesActionType): 
         case 'ADD_ENTRY':
             return {
                ...state,
-                entries: [...state.entries, action.payload]
+                entries: [action.payload, ...state.entries]
             };
 
         case 'INITIAL_LOAD_ENTRY':
