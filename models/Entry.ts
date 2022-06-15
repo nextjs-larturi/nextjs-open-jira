@@ -12,7 +12,8 @@ const entrySchema = new Schema({
         enum: {
             values: ['pending', 'in-progress', 'completed'],
             message: '{VALUE} must be one of: pending, in-progress, completed'
-        }
+        },
+        default: 'pending'
     },
 });
 
