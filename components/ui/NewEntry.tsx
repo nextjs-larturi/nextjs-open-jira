@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, ChangeEvent } from 'react';
 import { Box, Button, TextField } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
@@ -14,7 +14,7 @@ export const NewEntry = () => {
   const { addNewEntry } = useContext(EntriesContext);
   const { isAddingEntry, setIsAddingEntry } = useContext(UIContext)
 
-  const onTextFieldChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onTextFieldChanged = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   }
 
