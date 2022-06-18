@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState, useMemo } from 'react';
+import React, { ChangeEvent, FC, useState, useMemo, useContext } from 'react';
 import { GetServerSideProps } from 'next';
 
 import { 
@@ -22,6 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Layout } from '../../components/layouts';
 import { Entry, EntryStatus } from '../../interfaces';
 import { dbEntries } from '../../database';
+import { EntriesContext } from '../../context/entries/EntriesContext';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'completed'];
 
@@ -35,6 +36,8 @@ export const EntryPage: FC<Props> = ({ entry }) => {
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
 
+  const { updateEntry } = useContext(EntriesContext)
+
   const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched]);
 
   const onInputValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,9 +49,15 @@ export const EntryPage: FC<Props> = ({ entry }) => {
   }
 
   const onSave = () => {
-    if(inputValue.length === 0) return;
-    setTouched(false);
-    setInputValue('');
+    if(inputValue.trim().length === 0) return;
+
+    const updatedEntry: Entry = {
+        ...entry,
+        status,
+        description: inputValue,
+    } as Entry;
+
+    updateEntry(updatedEntry, true);
   }
 
   const humanizeStatus = (status: EntryStatus) => {
