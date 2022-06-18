@@ -1,4 +1,5 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
+import { GetServerSideProps } from 'next';
 
 import { 
     Button, 
@@ -23,7 +24,13 @@ import { Layout } from '../../components/layouts';
 import { EntryStatus } from '../../interfaces';
 import { useMemo } from 'react';
 
+import { isValidObjectId } from 'mongoose';
+
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'completed'];
+
+interface Props {
+
+}
 
 const humanizeStatus = (status: EntryStatus) => {
     switch (status) {
@@ -38,7 +45,7 @@ const humanizeStatus = (status: EntryStatus) => {
     }
 }
 
-export const EntryPage = () => {
+export const EntryPage: FC = () => {
 
   const [inputValue, setInputValue] = useState('');
   const [status, setStatus] = useState<EntryStatus>('pending');
@@ -136,6 +143,26 @@ export const EntryPage = () => {
         </Grid>
     </Layout>
   )
-}
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+
+    const { id } = params as { id: string };
+
+    if(!isValidObjectId(id)) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false
+            }
+        }
+    }
+
+    return {
+        props: {
+            id
+        }
+    }
+};
 
 export default EntryPage;
