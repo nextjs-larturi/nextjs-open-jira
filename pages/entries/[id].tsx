@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, useState, useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 
 import { 
@@ -19,36 +19,20 @@ import {
 
 import SaveSharpIcon from '@mui/icons-material/SaveSharp';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import { Layout } from '../../components/layouts';
-import { EntryStatus } from '../../interfaces';
-import { useMemo } from 'react';
-
-import { isValidObjectId } from 'mongoose';
+import { Entry, EntryStatus } from '../../interfaces';
+import { dbEntries } from '../../database';
 
 const validStatus: EntryStatus[] = ['pending', 'in-progress', 'completed'];
 
 interface Props {
-
+    entry: Entry
 }
 
-const humanizeStatus = (status: EntryStatus) => {
-    switch (status) {
-        case 'pending':
-            return 'Pending';
-        case 'in-progress':
-            return 'In Progress';
-        case 'completed':
-            return 'Completed';
-        default:
-            return 'Unknown';
-    }
-}
+export const EntryPage: FC<Props> = ({ entry }) => {
 
-export const EntryPage: FC = () => {
-
-  const [inputValue, setInputValue] = useState('');
-  const [status, setStatus] = useState<EntryStatus>('pending');
+  const [inputValue, setInputValue] = useState(entry.description);
+  const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
 
   const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched]);
@@ -67,8 +51,21 @@ export const EntryPage: FC = () => {
     setInputValue('');
   }
 
+  const humanizeStatus = (status: EntryStatus) => {
+    switch (status) {
+        case 'pending':
+            return 'Pending';
+        case 'in-progress':
+            return 'In Progress';
+        case 'completed':
+            return 'Completed';
+        default:
+            return 'Unknown';
+    }
+  }
+
   return (
-    <Layout title='....'>
+    <Layout title={inputValue.substring(0, 20) + '...'}>
         <Grid
             container
             justifyContent='center'
@@ -77,8 +74,8 @@ export const EntryPage: FC = () => {
             <Grid item xs={12} sm={8} md={6}>
                 <Card>
                     <CardHeader 
-                        title={`Titulo: ${inputValue}`}
-                        subheader={`Creada hace 12m`}
+                        title='Entrada'
+                        subheader={`Creada hace ${entry.createdAt} 12m`}
                     />
                     <CardContent>
                         <TextField 
@@ -149,7 +146,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     const { id } = params as { id: string };
 
-    if(!isValidObjectId(id)) {
+    const entry = await dbEntries.getEntriesById(id);
+
+    if (!entry) {
         return {
             redirect: {
                 destination: '/',
@@ -160,7 +159,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     return {
         props: {
-            id
+            entry
         }
     }
 };
