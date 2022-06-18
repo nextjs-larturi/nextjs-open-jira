@@ -31,7 +31,7 @@ export const EntriesProvider:FC<Props> = ({ children }) => {
                 payload: data,
             });
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -47,7 +47,8 @@ export const EntriesProvider:FC<Props> = ({ children }) => {
             });
 
             if(showSnackbar) {
-                enqueueSnackbar('Entry updated successfully', { 
+                const message = status === 'deleted' ? 'Entry deleted successfully' : 'Entry updated successfully';
+                enqueueSnackbar(message, { 
                     variant: 'success',
                     autoHideDuration: 2000,
                     anchorOrigin: {
@@ -56,28 +57,6 @@ export const EntriesProvider:FC<Props> = ({ children }) => {
                     }
                 });
             }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const deleteEntry = async (id: string) => {
-        try {
-            const { data } = await entriesApi.delete<Entry>(`/entries/${id}`);
-            dispatch({
-                type: 'DELETE_ENTRY',
-                payload: data,
-            });
-
-            enqueueSnackbar('Entry deleted successfully', { 
-                variant: 'success',
-                autoHideDuration: 2000,
-                anchorOrigin: {
-                    vertical: 'top',
-                    horizontal: 'right',
-                }
-            });
-            
         } catch (error) {
             console.error(error);
         }
@@ -102,7 +81,6 @@ export const EntriesProvider:FC<Props> = ({ children }) => {
             // Methods
             addNewEntry,
             updateEntry,
-            deleteEntry,
         }}>
             { children }
         </EntriesContext.Provider>

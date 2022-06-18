@@ -47,7 +47,7 @@ const postEntry = async (req:NextApiRequest,  res: NextApiResponse<Data>) => {
         return res.status(201).json(newEntry);
     } catch (error) {
         await db.disconnect();
-        console.log(error);
+        console.error(error);
         return res.status(500).json({ message: 'Algo salio mal, revisar el log' });
     }
 };

@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC, useState, useMemo, useContext } from 'react';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 
 import { 
     Button, 
@@ -36,7 +37,9 @@ export const EntryPage: FC<Props> = ({ entry }) => {
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
 
-  const { updateEntry, deleteEntry } = useContext(EntriesContext);
+  const router = useRouter(); 
+
+  const { updateEntry } = useContext(EntriesContext);
 
   const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched]);
 
@@ -61,7 +64,14 @@ export const EntryPage: FC<Props> = ({ entry }) => {
   }
 
   const onDelete = () => {
-    deleteEntry(entry._id);
+    const deletedEntry: Entry = {
+        ...entry,
+        description: inputValue,
+        status: 'deleted',
+    } as Entry;
+
+    updateEntry(deletedEntry, true);
+    router.push('/');
   }
 
   const humanizeStatus = (status: EntryStatus) => {

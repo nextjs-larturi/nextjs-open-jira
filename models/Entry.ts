@@ -6,12 +6,12 @@ export interface iEntry extends Entry {};
 const entrySchema = new Schema({
     description: { type: String, required: true },
     createdAt: { type: Number, required: true },
-    status: { 
+    status: {
         type: String, 
         required: true,
         enum: {
-            values: ['pending', 'in-progress', 'completed'],
-            message: '{VALUE} must be one of: pending, in-progress, completed'
+            values: ['pending', 'in-progress', 'completed', 'deleted'],
+            message: '{VALUE} must be one of: pending, in-progress, completed, deleted'
         },
         default: 'pending'
     },
