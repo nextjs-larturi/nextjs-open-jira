@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import NextLink from 'next/link';
 import { Box, Link, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography }  from '@mui/material';
 import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
-import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { UIContext } from '../../context/ui';
 
 interface MenuItem {
@@ -41,7 +41,7 @@ export const Sidebar = () => {
                             <NextLink href={item.path} passHref key={index}>
                                 <ListItem button>
                                     <ListItemIcon>
-                                        { index % 2 === 0 ? <InboxOutlinedIcon /> : <MailOutlineOutlinedIcon /> }
+                                        { index % 2 === 0 ? <InboxOutlinedIcon /> : <DeleteIcon /> }
                                     </ListItemIcon>
                                     <ListItemText primary={item.name} />
                                 </ListItem>
