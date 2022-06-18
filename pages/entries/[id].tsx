@@ -36,7 +36,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
 
-  const { updateEntry } = useContext(EntriesContext)
+  const { updateEntry, deleteEntry } = useContext(EntriesContext);
 
   const isNotValid = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched]);
 
@@ -58,6 +58,10 @@ export const EntryPage: FC<Props> = ({ entry }) => {
     } as Entry;
 
     updateEntry(updatedEntry, true);
+  }
+
+  const onDelete = () => {
+    deleteEntry(entry._id);
   }
 
   const humanizeStatus = (status: EntryStatus) => {
@@ -142,7 +146,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
                 bottom: 30,
                 right: 30,
                 backgroundColor: 'red'
-            }}>
+            }} onClick={onDelete}>
                 <DeleteIcon />
             </IconButton>
 
