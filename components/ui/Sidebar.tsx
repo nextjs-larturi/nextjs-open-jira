@@ -12,7 +12,7 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
     { name: 'Inbox', path: '/' },
-    { name: 'Stats', path: '/stats' },
+    { name: 'Trash', path: '/entries/trash' },
 ];
 
 export const Sidebar = () => {
