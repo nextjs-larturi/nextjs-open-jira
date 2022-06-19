@@ -39,7 +39,7 @@ export const Sidebar = () => {
                     {
                         menuItems.map((item, index) => (
                             <NextLink href={item.path} passHref key={index}>
-                                <ListItem button>
+                                <ListItem button onClick={closeSideMenu}>
                                     <ListItemIcon>
                                         { index % 2 === 0 ? <InboxOutlinedIcon /> : <DeleteIcon /> }
                                     </ListItemIcon>

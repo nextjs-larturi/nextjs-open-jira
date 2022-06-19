@@ -28,7 +28,6 @@ export const NewEntry = () => {
 
   return (
     <Box sx={{ marginBottom: 2, paddingX: 1 }}>
-
         {
             isAddingEntry ? (
                 <>
@@ -51,7 +50,11 @@ export const NewEntry = () => {
                             variant='outlined'
                             color='primary'
                             endIcon={<CancelOutlinedIcon />}
-                            onClick = {() => setIsAddingEntry(false)}
+                            onClick = {() => {
+                                setTouched(false);
+                                setInputValue('');
+                                setIsAddingEntry(false);
+                            }}
                         >
                             Cancelar
                         </Button>  

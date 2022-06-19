@@ -36,3 +36,5 @@ yarn-error.log*
 
 mongo/
 .env
+.env.development
+.env.production
