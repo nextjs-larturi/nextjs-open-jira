@@ -1,6 +1,6 @@
 # Next.js - Open Jira App
 
-## App tipo Jira, con Next y MongoDB
+## App tipo Jira, con Next v12.1.6 y MongoDB
 
 ---
 
